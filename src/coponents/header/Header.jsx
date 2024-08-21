@@ -1,7 +1,7 @@
 import "./header.scss";
 import logo from "../../assets/tmovie.png";
 import { Link, useLocation } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
 const headerNav = [
   {
@@ -21,6 +21,22 @@ const Header = () => {
   const { pathname } = useLocation();
   const active = headerNav.findIndex((e) => e.path === pathname);
   const headerRef = useRef(null);
+  useEffect(() => {
+    const shrinkHeader = () => {
+      if (
+        document.body.scrollTop > 100 ||
+        document.documentElement.scrollTop > 100
+      ) {
+        headerRef.current.classList.add("shrink");
+      } else {
+        headerRef.current.classList.remove("shrink");
+      }
+    };
+    window.addEventListener("scroll", shrinkHeader);
+    return () => {
+      window.removeEventListener("scroll", shrinkHeader);
+    };
+  }, []);
   return (
     <div ref={headerRef} className="header">
       <div className="header__wrap container">
