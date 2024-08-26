@@ -19,9 +19,8 @@ axiosClient.interceptors.response.use(
   (response) => {
     if (response && response.data) {
       return response.data;
-    } else {
-      return response;
     }
+    return response;
   },
   (err) => {
     throw err;
