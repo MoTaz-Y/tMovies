@@ -27,7 +27,6 @@ const HeroSlide = () => {
         const response = await tmdbApi.getMoviesList(movieType.popular, {
           params,
         });
-        console.log(response);
         setMovieItems(response.results.slice(0, 4));
       } catch (error) {
         console.log(error);
@@ -35,7 +34,6 @@ const HeroSlide = () => {
     };
     getMovies();
   }, []);
-  console.log(movieItems);
 
   return (
     <div className="hero-slide">
@@ -48,9 +46,9 @@ const HeroSlide = () => {
           ))}
         </div>
       </div>
-      {/* {movieItems.map((item) => (
+      {movieItems.map((item) => (
         <TrailerModal key={item.id} item={item} />
-      ))} */}
+      ))}
     </div>
   );
 };
@@ -66,6 +64,7 @@ const HeroSlideItem = (props) => {
     const modal = document.querySelector(`#modal_${item.id}`);
 
     const videos = await tmdbApi.getVideos(category.movie, item.id);
+    // console.log(videos);
 
     if (videos.results.length > 0) {
       const videSrc = "https://www.youtube.com/embed/" + videos.results[0].key;
@@ -110,11 +109,15 @@ const TrailerModal = (props) => {
   const item = props.item;
 
   const iframeRef = useRef(null);
-  const onClose = () => iframeRef.current.setAttribute("src", "");
+  const onClose = () => {
+    iframeRef.current.setAttribute("src", "");
+  };
+  //there is a bug here when closing it still playing until open it again
+  //solved by using onclose function as props to modal and call it with x button in modal
 
   return (
     <Modal active={false} id={`modal_${item.id}`}>
-      <ModalContent>
+      <ModalContent onClose={onClose}>
         <iframe
           ref={iframeRef}
           width="100%"
@@ -122,7 +125,6 @@ const TrailerModal = (props) => {
           title="trailer"
         ></iframe>
       </ModalContent>
-      <i className="bx bx-x" onClick={onClose}></i>
     </Modal>
   );
 };
