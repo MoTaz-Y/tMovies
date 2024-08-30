@@ -70,7 +70,7 @@ const Details = () => {
           <div className="container">
             <div className="nb-3 section videos">
               {isCreatedChild ? (
-                <div className="section__header">
+                <div className="section__videos__header">
                   <h1>Videos</h1>
                 </div>
               ) : null}
@@ -78,7 +78,7 @@ const Details = () => {
             </div>
 
             <div className="section mb-3">
-              <div className="section__header mb-2">
+              <div className="section__videos__header mb-2">
                 {isCreatedChild ? <h2>Similar</h2> : null}
               </div>
               <MovieList
