@@ -12,6 +12,7 @@ import tmdbApi, {
   tvType,
 } from "../../api/tmdbApi";
 import Input from "../input/Input.jsx";
+import Button from "../button/Button";
 
 const MovieGrid = (props) => {
   const [items, setItems] = useState([]);
@@ -120,6 +121,13 @@ const MovieSearch = (props) => {
         value={keyword}
         onChange={(e) => setKeyword(e.target.value)}
       />
+      <Button
+        onClick={goToSearch}
+        className="small"
+        disabled={keyword.length === 0}
+      >
+        Search
+      </Button>
     </div>
   );
 };

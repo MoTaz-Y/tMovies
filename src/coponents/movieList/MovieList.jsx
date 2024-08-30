@@ -35,10 +35,11 @@ const MovieList = (props) => {
       }
 
       setMovieItems(response.results);
+      if (props.onCreated) props.onCreated();
     };
 
     getMoviesList();
-  }, []);
+  }, [props.category, props.type, props.id, props.onCreated]);
   return (
     <div className="hero-slide movie-list">
       <div className="embla">
@@ -63,6 +64,8 @@ MovieList.propTypes = {
   id: PropTypes.number,
 
   children: PropTypes.node,
+
+  onCreated: PropTypes.func,
 };
 
 export default MovieList;
